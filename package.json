@@ -5,6 +5,9 @@
   "type": "module",
   "dependencies": {
     "@apollo/client": "^3.9.10",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.2",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
@@ -12,7 +15,7 @@
     "graphql": "^16.11.0",
     "graphql-tag": "^2.12.6",
     "install": "^0.13.0",
-    "material-icons": "^1.10.4",
+    "material-icons": "^1.13.14",
     "npm": "^8.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
