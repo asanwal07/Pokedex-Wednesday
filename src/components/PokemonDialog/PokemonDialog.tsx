@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { useGetPokemon } from '../../hooks/useGetPokemon';
 import { createUseStyles } from 'react-jss';
+import { Loader } from '../Loader/Loader';
 
 export const PokemonDialog = () => {
   const { name } = useParams();
@@ -19,7 +20,7 @@ export const PokemonDialog = () => {
   const handleClose = () => navigate('/pokemon');
 
   const getTypeColor = (type: string) => {
-    const colors = {
+    const colors: Record<string, string> = {
       grass: '#78C850',
       poison: '#A040A0',
       fire: '#F08030',
@@ -45,9 +46,8 @@ export const PokemonDialog = () => {
   return (
     <Dialog open={!!name} onClose={handleClose} fullWidth maxWidth="md">
       {loading ? (
-        <DialogContent className={classes.loading}>
-          <div className={classes.spinner}></div>
-          <div className={classes.loadingText}>Loading Pokemon...</div>
+        <DialogContent className={classes.dialogContent}>
+          <Loader />
         </DialogContent>
       ) : data?.pokemon ? (
         <div className={classes.root}>
@@ -353,35 +353,11 @@ const useStyles = createUseStyles({
     fontSize: '20px',
     fontWeight: '700',
   },
-  loading: {
+  dialogContent: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     height: '60vh',
-    gap: '20px',
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  },
-  spinner: {
-    width: '60px',
-    height: '60px',
-    border: '6px solid rgba(255, 255, 255, 0.3)',
-    borderTop: '6px solid #ffffff',
-    borderRadius: '50%',
-    animation: '$spin 1s linear infinite',
-  },
-  loadingText: {
-    fontSize: '20px',
-    fontWeight: '600',
-    color: 'white',
-    animation: '$pulse 1.5s ease-in-out infinite',
-  },
-  '@keyframes spin': {
-    from: { transform: 'rotate(0deg)' },
-    to: { transform: 'rotate(360deg)' },
-  },
-  '@keyframes pulse': {
-    '0%, 100%': { opacity: 0.6 },
-    '50%': { opacity: 1 },
   },
 });

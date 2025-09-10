@@ -1,7 +1,10 @@
 import { useEffect, useRef } from 'react';
 
-const useDebounced = (mainfn, delay = 500) => {
-  const timerRef = useRef();
+const useDebounced = <T extends (...args: any[]) => void>(
+  mainfn: T,
+  delay: number = 500
+): ((...args: Parameters<T>) => void) => {
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     return () => {
@@ -9,11 +12,11 @@ const useDebounced = (mainfn, delay = 500) => {
     };
   }, []);
 
-  const debounce = (...args) => {
+  const debounce = (...args: Parameters<T>) => {
     if (timerRef.current) clearTimeout(timerRef.current);
 
     timerRef.current = setTimeout(() => {
-      mainfn(...args); // Fixed: use 'mainfn' instead of 'fn'
+      mainfn(...args);
     }, delay);
   };
 

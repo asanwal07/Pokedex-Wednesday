@@ -2,6 +2,8 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useGetPokemons } from '../../hooks/useGetPokemons';
 import { Link } from 'react-router-dom';
+import { Loader } from '../Loader/Loader';
+import Pagination from '../Pagination/Pagination';
 import useDebounced from 'src/hooks/useDebounce';
 
 export const PokemonList = () => {
@@ -38,17 +40,9 @@ export const PokemonList = () => {
     setCurrentPage(1);
   }, [searchTerm]);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  if (loading)
-    return (
-      <div className={classes.loading}>
-        <div className={classes.spinner}></div>
-        <div className={classes.loadingText}>Loading...</div>
-      </div>
-    );
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div>
@@ -92,43 +86,12 @@ export const PokemonList = () => {
         )}
       </div>
 
-      {totalPages > 1 && (
-        <div className={classes.pagination}>
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className={`${classes.pageBtn} ${
-              currentPage === 1 ? classes.disabled : ''
-            }`}
-          >
-            ← Prev
-          </button>
-
-          <div className={classes.pageNumbers}>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`${classes.pageBtn} ${
-                  currentPage === page ? classes.active : ''
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className={`${classes.pageBtn} ${
-              currentPage === totalPages ? classes.disabled : ''
-            }`}
-          >
-            Next →
-          </button>
-        </div>
-      )}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        maxVisiblePages={itemsPerPage}
+      />
     </div>
   );
 };
@@ -210,40 +173,10 @@ const useStyles = createUseStyles(
         textDecoration: 'none',
       },
     },
-    loading: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '80vh',
-      gap: '16px',
-    },
-    spinner: {
-      width: '50px',
-      height: '50px',
-      border: '6px solid #f3f3f3',
-      borderTop: '6px solid #ff4500', // Pokémon-style orange
-      borderRadius: '50%',
-      animation: '$spin 1s linear infinite',
-    },
-    loadingText: {
-      fontSize: '22px',
-      fontWeight: 600,
-      color: '#ff4500',
-      animation: '$fade 1.5s ease-in-out infinite alternate',
-    },
-    // Keyframes
-    '@keyframes spin': {
-      from: { transform: 'rotate(0deg)' },
-      to: { transform: 'rotate(360deg)' },
-    },
-    '@keyframes fade': {
-      from: { opacity: 0.5 },
-      to: { opacity: 1 },
-    },
+
     searchContainer: {
       display: 'flex',
-      justifyContent: 'center', // center horizontally
+      justifyContent: 'center',
       margin: '24px 0',
       '@media (max-width: 480px)': {
         margin: '16px 0',
@@ -280,52 +213,6 @@ const useStyles = createUseStyles(
       color: '#666',
       fontSize: '14px',
       marginTop: '8px',
-    },
-    pagination: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      gap: '8px',
-      marginTop: '32px',
-      padding: '20px',
-    },
-    pageNumbers: {
-      display: 'flex',
-      gap: '4px',
-      '@media (max-width: 480px)': {
-        display: 'none',
-      },
-    },
-    pageBtn: {
-      padding: '8px 12px',
-      border: '1px solid #ddd',
-      background: 'Black',
-      borderRadius: '6px',
-      cursor: 'pointer',
-      fontSize: '14px',
-      fontWeight: '500',
-      transition: 'all 0.2s ease',
-      '&:hover:not(.disabled)': {
-        background: 'white',
-        color: 'black',
-        borderColor: '#bbb',
-      },
-    },
-    active: {
-      background: '#667eea !important',
-      color: 'white !important',
-      borderColor: '#667eea !important',
-      '&:hover': {
-        background: '#5a6fd8 !important',
-      },
-    },
-    disabled: {
-      opacity: '0.5',
-      cursor: 'not-allowed !important',
-      '&:hover': {
-        background: 'white !important',
-        borderColor: '#ddd !important',
-      },
     },
   },
   { name: 'PokemonList' }
