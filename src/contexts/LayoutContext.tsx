@@ -4,6 +4,7 @@ import React, {
   SetStateAction,
   useContext,
   useState,
+  ReactNode,
 } from 'react';
 
 type Layout = { navCollapsed: boolean };
@@ -13,12 +14,16 @@ type LayoutContextValue = {
   setLayout: Dispatch<SetStateAction<Layout>>;
 };
 
+interface LayoutProviderProps {
+  children: ReactNode;
+}
+
 const LayoutContext = createContext<LayoutContextValue>({
   layout: { navCollapsed: false },
   setLayout: () => null,
 });
 
-export const LayoutProvider: React.FC = ({ children }) => {
+export const LayoutProvider: React.FC<LayoutProviderProps> = ({ children }) => {
   const [layout, setLayout] = useState({
     navCollapsed: true,
   });

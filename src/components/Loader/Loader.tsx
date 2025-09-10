@@ -37,7 +37,6 @@ const useStyles = createUseStyles(
       color: '#ff4500',
       animation: '$fade 1.5s ease-in-out infinite alternate',
     },
-    // Keyframes
     '@keyframes spin': {
       from: { transform: 'rotate(0deg)' },
       to: { transform: 'rotate(360deg)' },

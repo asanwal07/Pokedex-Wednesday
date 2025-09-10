@@ -7,7 +7,7 @@ import { ApolloProvider } from '@apollo/client';
 import { client } from './client';
 import { ListPage, Home } from '../screens';
 
-import { PokemonDialog } from '../components/PokemonDialog/PokemonDialog';
+import { PokemonDialog } from '../components/PokemonDialog';
 
 function App() {
   const classes = useStyles();
