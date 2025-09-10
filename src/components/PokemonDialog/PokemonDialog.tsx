@@ -113,6 +113,46 @@ export const PokemonDialog = () => {
                 </div>
               </div>
 
+              <div className={classes.resistanceSection}>
+                <h3 className={classes.sectionTitle}>Battle Effectiveness</h3>
+
+                <div className={classes.effectivenessContainer}>
+                  <div className={classes.resistantSection}>
+                    <h4 className={classes.effectivenessTitle}>
+                      🛡️ Resistant To
+                    </h4>
+                    <div className={classes.typesRow}>
+                      {data.pokemon.resistant?.map((type: string) => (
+                        <span
+                          key={type}
+                          className={classes.resistantBadge}
+                          style={{ backgroundColor: getTypeColor(type) }}
+                        >
+                          {type}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className={classes.weaknessSection}>
+                    <h4 className={classes.effectivenessTitle}>
+                      ⚠️ Weak Against
+                    </h4>
+                    <div className={classes.typesRow}>
+                      {data.pokemon.weaknesses?.map((type: string) => (
+                        <span
+                          key={type}
+                          className={classes.weaknessBadge}
+                          style={{ backgroundColor: getTypeColor(type) }}
+                        >
+                          {type}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className={classes.statsSection}>
                 <h3 className={classes.statsTitle}>Battle Stats</h3>
                 <div className={classes.statsGrid}>
@@ -359,5 +399,71 @@ const useStyles = createUseStyles({
     alignItems: 'center',
     justifyContent: 'center',
     height: '60vh',
+  },
+
+  resistantBadge: {
+    padding: '6px 12px',
+    borderRadius: '20px',
+    fontSize: '13px',
+    fontWeight: '600',
+    color: 'white',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
+    boxShadow: '0 2px 8px rgba(34, 197, 94, 0.3)',
+    border: '2px solid rgba(255, 255, 255, 0.3)',
+  },
+  weaknessBadge: {
+    padding: '6px 12px',
+    borderRadius: '20px',
+    fontSize: '13px',
+    fontWeight: '600',
+    color: 'white',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
+    boxShadow: '0 2px 8px rgba(239, 68, 68, 0.3)',
+    border: '2px solid rgba(255, 255, 255, 0.3)',
+  },
+  resistanceSection: {
+    marginTop: '16px',
+  },
+  sectionTitle: {
+    fontSize: '20px',
+    fontWeight: '700',
+    color: '#1e293b',
+    marginBottom: '16px',
+    textAlign: 'center',
+  },
+  effectivenessContainer: {
+    display: 'grid',
+    gap: '16px',
+    '@media (max-width: 600px)': {
+      gap: '12px',
+    },
+  },
+  resistantSection: {
+    background: 'rgba(34, 197, 94, 0.1)',
+    border: '2px solid rgba(34, 197, 94, 0.3)',
+    borderRadius: '12px',
+    padding: '16px',
+  },
+  weaknessSection: {
+    background: 'rgba(239, 68, 68, 0.1)',
+    border: '2px solid rgba(239, 68, 68, 0.3)',
+    borderRadius: '12px',
+    padding: '16px',
+  },
+  effectivenessTitle: {
+    fontSize: '16px',
+    fontWeight: '600',
+    margin: '0 0 12px 0',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    color: '#64748b',
+  },
+  typesRow: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '8px',
   },
 });
